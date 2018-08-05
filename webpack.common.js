@@ -11,14 +11,33 @@ module.exports = {
     path: path.resolve(__dirname, 'dist')
   },
   module: {
-    rules: [{
-      test: /\.js?/,
-      include: path.resolve(__dirname, './src'),
-      loader: 'babel-loader',
-      query: {
-        presets: ['react']
-      }
-    }]
+    rules: [
+        {
+            test: /\.js?/,
+            include: path.resolve(__dirname, './src'),
+            loader: 'babel-loader',
+            query: {
+                presets: ['react']
+            }
+        },
+        {
+            test: /\.(png|jpe|jpg|woff|woff2|eot|ttf|svg)(\?.*$|$)/,
+            use: [
+                {
+                    loader: 'file-loader',
+                    options: {}
+                }
+            ]
+        },
+        {
+            test: /\.scss$/,
+            use: [
+                "style-loader",
+                "css-loader",
+                "sass-loader"
+            ]
+        }
+    ]
   },
   plugins: [
     new CleanWebpackPlugin(['dist']),

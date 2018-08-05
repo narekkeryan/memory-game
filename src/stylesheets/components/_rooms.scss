@@ -1,0 +1,73 @@
+.rooms-area {
+  width: 800px;
+  margin: 30px auto;
+  border-radius: 5px;
+  box-shadow: 0 0 5px 1px;
+  background: #f8f8f8;
+  text-align: center;
+  .game-types {
+    display: flex;
+    justify-content: space-evenly;
+    background: #9b9b9b;
+    color: #fff;
+    font-weight: bold;
+    text-transform: uppercase;
+    .game-type {
+      flex: 1;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+      padding: 10px 0;
+      &.active {
+        background: #f8f8f8;
+        color: #9b9b9b
+      }
+      &:not(.active) {
+        cursor: pointer;
+      }
+    }
+  }
+  .rooms {
+    max-height: 495px;
+    overflow: auto;
+    .singular-rooms, .multiple-rooms {
+      margin-bottom: 0;
+      &:not(.active) {
+        display: none;
+      }
+      tr:not(.room) {
+        font-family: 'MedievalSharp';
+      }
+      .room {
+        .name {
+          font-family: 'Hanalei Fill';
+        }
+        .members {
+          >span {
+            padding: 0 5px;
+          }
+        }
+        .difficulty {
+          color: #fff;
+          font-family: 'Kirang Haerang';
+          &.easy {
+            background-color: #8cbb4d;
+          }
+          &.normal {
+            background-color: #b1b16a;
+          }
+          &.difficult {
+            background-color: #c3a773;
+          }
+          &.legendary {
+            background-color: #a26539;
+          }
+        }
+        .options {
+          >i.fa-sign-in-alt {
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
+}
