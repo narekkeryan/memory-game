@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class Rooms extends Component {
     constructor(props) {
         super(props);
         this.state = { gameType: false };
         this.toggleGameType = this.toggleGameType.bind(this);
+        this.join = this.join.bind(this);
     }
 
     toggleGameType() {
@@ -12,7 +14,7 @@ class Rooms extends Component {
     }
 
     join() {
-        console.log('joining room');
+        this.props.onClick();
     }
 
     render() {
@@ -243,5 +245,10 @@ class Rooms extends Component {
         );
     }
 }
+
+Rooms.propTypes = {
+    onClick: PropTypes.func.isRequired,
+    gameStarted: PropTypes.bool.isRequired
+};
 
 export default Rooms;
