@@ -1,0 +1,1 @@
+export default ['easy', 'normal', 'difficult', 'legendary'];

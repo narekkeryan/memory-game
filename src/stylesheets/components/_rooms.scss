@@ -48,6 +48,7 @@
         }
         .difficulty {
           color: #fff;
+          text-transform: capitalize;
           font-family: 'Kirang Haerang';
           &.easy {
             background-color: #8cbb4d;

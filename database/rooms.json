@@ -1,0 +1,74 @@
+[
+  {
+    "name": "Alderaan",
+    "difficulty": 0,
+    "members": 4,
+    "occupied": 0
+  },
+  {
+    "name": "Coruscant",
+    "difficulty": 0,
+    "members": 4,
+    "occupied": 1
+  },
+  {
+    "name": "Dagobah",
+    "difficulty": 0,
+    "members": 4,
+    "occupied": 2
+  },
+  {
+    "name": "Dantooine",
+    "difficulty": 0,
+    "members": 4,
+    "occupied": 3
+  },
+  {
+    "name": "Dathomir",
+    "difficulty": 0,
+    "members": 4,
+    "occupied": 4
+  },
+  {
+    "name": "Florrum",
+    "difficulty": 1,
+    "members": 4,
+    "occupied": 0
+  },
+  {
+    "name": "Geonosis",
+    "difficulty": 1,
+    "members": 4,
+    "occupied": 0
+  },
+  {
+    "name": "Mandalore",
+    "difficulty": 1,
+    "members": 4,
+    "occupied": 0
+  },
+  {
+    "name": "Mustafar",
+    "difficulty": 2,
+    "members": 4,
+    "occupied": 0
+  },
+  {
+    "name": "Naboo",
+    "difficulty": 2,
+    "members": 4,
+    "occupied": 0
+  },
+  {
+    "name": "Tatooine",
+    "difficulty": 2,
+    "members": 4,
+    "occupied": 0
+  },
+  {
+    "name": "Yavin",
+    "difficulty": 3,
+    "members": 4,
+    "occupied": 0
+  }
+]

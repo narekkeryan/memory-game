@@ -4,7 +4,9 @@
   "description": "Multiplayer Memory Game",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --open --config webpack.dev.js",
+    "dev:client": "webpack-dev-server --open --config webpack.dev.js",
+    "dev:server": "nodemon index.js",
+    "start": "concurrently \"npm run dev:client\" \"npm run dev:server\"",
     "build": "webpack --config webpack.prod.js"
   },
   "repository": {
@@ -22,6 +24,10 @@
   },
   "homepage": "https://github.com/narekkeryan/memory-game#readme",
   "dependencies": {
+    "concurrently": "^3.6.1",
+    "cors": "^2.8.4",
+    "express": "^4.16.3",
+    "fs-extra": "^7.0.0",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
     "react-redux": "^5.0.7",
@@ -33,6 +39,7 @@
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.5",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
     "bootstrap": "^4.1.3",

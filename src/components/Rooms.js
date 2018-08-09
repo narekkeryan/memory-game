@@ -1,12 +1,19 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import Difficulties from '../constants/Difficulties';
 
 class Rooms extends Component {
     constructor(props) {
         super(props);
-        this.state = { gameType: false };
+
+        this.state = { gameType: false};
+
         this.toggleGameType = this.toggleGameType.bind(this);
         this.join = this.join.bind(this);
+    }
+
+    componentWillMount() {
+        this.props.fetchRooms();
     }
 
     toggleGameType() {
@@ -27,217 +34,46 @@ class Rooms extends Component {
                 <div className="rooms">
                     <table className={!this.state.gameType ? 'table singular-rooms active': 'table singular-rooms'}>
                         <thead>
-                        <tr>
-                            <th>Room</th>
-                            <th>Difficulty</th>
-                            <th>Join</th>
-                        </tr>
+                            <tr>
+                                <th>Room</th>
+                                <th>Difficulty</th>
+                                <th>Join</th>
+                            </tr>
                         </thead>
                         <tbody>
-                        <tr className="room">
-                            <td className="name">Alderaan</td>
-                            <td className="difficulty easy">Easy</td>
-                            <td className="options" onClick={this.join}><i className="fas fa-sign-in-alt"></i></td>
-                        </tr>
-                        <tr className="room">
-                            <td className="name">Coruscant</td>
-                            <td className="difficulty easy">Easy</td>
-                            <td className="options" onClick={this.join}><i className="fas fa-sign-in-alt"></i></td>
-                        </tr>
-                        <tr className="room">
-                            <td className="name">Dagobah</td>
-                            <td className="difficulty easy">Easy</td>
-                            <td className="options" onClick={this.join}><i className="fas fa-sign-in-alt"></i></td>
-                        </tr>
-                        <tr className="room">
-                            <td className="name">Dantooine</td>
-                            <td className="difficulty easy">Easy</td>
-                            <td className="options" onClick={this.join}><i className="fas fa-sign-in-alt"></i></td>
-                        </tr>
-                        <tr className="room">
-                            <td className="name">Dathomir</td>
-                            <td className="difficulty easy">Easy</td>
-                            <td className="options" onClick={this.join}><i className="fas fa-sign-in-alt"></i></td>
-                        </tr>
-                        <tr className="room">
-                            <td className="name">Florrum</td>
-                            <td className="difficulty normal">Normal</td>
-                            <td className="options" onClick={this.join}><i className="fas fa-sign-in-alt"></i></td>
-                        </tr>
-                        <tr className="room">
-                            <td className="name">Geonosis</td>
-                            <td className="difficulty normal">Normal</td>
-                            <td className="options" onClick={this.join}><i className="fas fa-sign-in-alt"></i></td>
-                        </tr>
-                        <tr className="room">
-                            <td className="name">Mandalore</td>
-                            <td className="difficulty normal">Normal</td>
-                            <td className="options" onClick={this.join}><i className="fas fa-sign-in-alt"></i></td>
-                        </tr>
-                        <tr className="room">
-                            <td className="name">Mustafar</td>
-                            <td className="difficulty difficult">Difficult</td>
-                            <td className="options" onClick={this.join}><i className="fas fa-sign-in-alt"></i></td>
-                        </tr>
-                        <tr className="room">
-                            <td className="name">Naboo</td>
-                            <td className="difficulty difficult">Difficult</td>
-                            <td className="options" onClick={this.join}><i className="fas fa-sign-in-alt"></i></td>
-                        </tr>
-                        <tr className="room">
-                            <td className="name">Tatooine</td>
-                            <td className="difficulty difficult">Difficult</td>
-                            <td className="options" onClick={this.join}><i className="fas fa-sign-in-alt"></i></td>
-                        </tr>
-                        <tr className="room">
-                            <td className="name">Yavin</td>
-                            <td className="difficulty legendary">Legendary</td>
-                            <td className="options" onClick={this.join}><i className="fas fa-sign-in-alt"></i></td>
-                        </tr>
+                            { this.props.rooms && this.props.rooms.map((room, key) => (
+                                <tr key={key} className="room">
+                                    <td className="name">{room.name}</td>
+                                    <td className={'difficulty ' + Difficulties[room.difficulty]}>{Difficulties[room.difficulty]}</td>
+                                    <td className="options" onClick={this.join}><i className="fas fa-sign-in-alt"></i></td>
+                                </tr>
+                            )) }
                         </tbody>
                     </table>
                     <table className={this.state.gameType ? 'table multiple-rooms active': 'table multiple-rooms'}>
                         <thead>
-                        <tr>
-                            <th>Room</th>
-                            <th>Members</th>
-                            <th>Difficulty</th>
-                            <th>Join</th>
-                        </tr>
+                            <tr>
+                                <th>Room</th>
+                                <th>Members</th>
+                                <th>Difficulty</th>
+                                <th>Join</th>
+                            </tr>
                         </thead>
                         <tbody>
-                        <tr className="room">
-                            <td className="name">Alderaan</td>
-                            <td className="members">
-                                <span className="fa fa-user"></span>
-                                <span className="far fa-user"></span>
-                                <span className="far fa-user"></span>
-                                <span className="far fa-user"></span>
-                            </td>
-                            <td className="difficulty easy">Easy</td>
-                            <td className="options" onClick={this.join}><i className="fas fa-sign-in-alt"></i></td>
-                        </tr>
-                        <tr className="room">
-                            <td className="name">Coruscant</td>
-                            <td className="members">
-                                <span className="far fa-user"></span>
-                                <span className="far fa-user"></span>
-                                <span className="far fa-user"></span>
-                                <span className="far fa-user"></span>
-                            </td>
-                            <td className="difficulty easy">Easy</td>
-                            <td className="options" onClick={this.join}><i className="fas fa-sign-in-alt"></i></td>
-                        </tr>
-                        <tr className="room">
-                            <td className="name">Dagobah</td>
-                            <td className="members">
-                                <span className="far fa-user"></span>
-                                <span className="far fa-user"></span>
-                                <span className="far fa-user"></span>
-                                <span className="far fa-user"></span>
-                            </td>
-                            <td className="difficulty easy">Easy</td>
-                            <td className="options" onClick={this.join}><i className="fas fa-sign-in-alt"></i></td>
-                        </tr>
-                        <tr className="room">
-                            <td className="name">Dantooine</td>
-                            <td className="members">
-                                <span className="far fa-user"></span>
-                                <span className="fa fa-user"></span>
-                                <span className="far fa-user"></span>
-                                <span className="far fa-user"></span>
-                            </td>
-                            <td className="difficulty easy">Easy</td>
-                            <td className="options" onClick={this.join}><i className="fas fa-sign-in-alt"></i></td>
-                        </tr>
-                        <tr className="room">
-                            <td className="name">Dathomir</td>
-                            <td className="members">
-                                <span className="far fa-user"></span>
-                                <span className="far fa-user"></span>
-                                <span className="far fa-user"></span>
-                                <span className="far fa-user"></span>
-                            </td>
-                            <td className="difficulty easy">Easy</td>
-                            <td className="options" onClick={this.join}><i className="fas fa-sign-in-alt"></i></td>
-                        </tr>
-                        <tr className="room">
-                            <td className="name">Florrum</td>
-                            <td className="members">
-                                <span className="far fa-user"></span>
-                                <span className="far fa-user"></span>
-                                <span className="fa fa-user"></span>
-                                <span className="far fa-user"></span>
-                            </td>
-                            <td className="difficulty normal">Normal</td>
-                            <td className="options" onClick={this.join}><i className="fas fa-sign-in-alt"></i></td>
-                        </tr>
-                        <tr className="room">
-                            <td className="name">Geonosis</td>
-                            <td className="members">
-                                <span className="fa fa-user"></span>
-                                <span className="far fa-user"></span>
-                                <span className="far fa-user"></span>
-                                <span className="far fa-user"></span>
-                            </td>
-                            <td className="difficulty normal">Normal</td>
-                            <td className="options" onClick={this.join}><i className="fas fa-sign-in-alt"></i></td>
-                        </tr>
-                        <tr className="room">
-                            <td className="name">Mandalore</td>
-                            <td className="members">
-                                <span className="fa fa-user"></span>
-                                <span className="fa fa-user"></span>
-                                <span className="fa fa-user"></span>
-                                <span className="fa fa-user"></span>
-                            </td>
-                            <td className="difficulty normal">Normal</td>
-                            <td className="options" onClick={this.join}><i className="far fa-times-circle"></i></td>
-                        </tr>
-                        <tr className="room">
-                            <td className="name">Mustafar</td>
-                            <td className="members">
-                                <span className="far fa-user"></span>
-                                <span className="far fa-user"></span>
-                                <span className="far fa-user"></span>
-                                <span className="far fa-user"></span>
-                            </td>
-                            <td className="difficulty difficult">Difficult</td>
-                            <td className="options" onClick={this.join}><i className="fas fa-sign-in-alt"></i></td>
-                        </tr>
-                        <tr className="room">
-                            <td className="name">Naboo</td>
-                            <td className="members">
-                                <span className="fa fa-user"></span>
-                                <span className="fa fa-user"></span>
-                                <span className="far fa-user"></span>
-                                <span className="fa fa-user"></span>
-                            </td>
-                            <td className="difficulty difficult">Difficult</td>
-                            <td className="options" onClick={this.join}><i className="fas fa-sign-in-alt"></i></td>
-                        </tr>
-                        <tr className="room">
-                            <td className="name">Tatooine</td>
-                            <td className="members">
-                                <span className="fa fa-user"></span>
-                                <span className="far fa-user"></span>
-                                <span className="far fa-user"></span>
-                                <span className="far fa-user"></span>
-                            </td>
-                            <td className="difficulty difficult">Difficult</td>
-                            <td className="options" onClick={this.join}><i className="fas fa-sign-in-alt"></i></td>
-                        </tr>
-                        <tr className="room">
-                            <td className="name">Yavin</td>
-                            <td className="members">
-                                <span className="far fa-user"></span>
-                                <span className="far fa-user"></span>
-                                <span className="far fa-user"></span>
-                                <span className="far fa-user"></span>
-                            </td>
-                            <td className="difficulty legendary">Legendary</td>
-                            <td className="options" onClick={this.join}><i className="fas fa-sign-in-alt"></i></td>
-                        </tr>
+                            { this.props.rooms && this.props.rooms.map((room, key) => (
+                                <tr key={key} className="room">
+                                    <td className="name">{room.name}</td>
+                                    <td className="members">
+                                        { [...new Array(room.members).keys()].map((member, id) => (
+                                            <span key={id} className={room.occupied > id ? "fa fa-user" : "far fa-user"}></span>
+                                        )) }
+                                    </td>
+                                    <td className={'difficulty ' + Difficulties[room.difficulty]}>{Difficulties[room.difficulty]}</td>
+                                    <td className="options" onClick={room.members - room.occupied ? this.join : null}>
+                                        <i className={room.members - room.occupied ? "fas fa-sign-in-alt" : "far fa-times-circle"}></i>
+                                    </td>
+                                </tr>
+                            )) }
                         </tbody>
                     </table>
                 </div>
@@ -247,6 +83,8 @@ class Rooms extends Component {
 }
 
 Rooms.propTypes = {
+    fetchRooms: PropTypes.func.isRequired,
+    rooms: PropTypes.array.isRequired,
     onClick: PropTypes.func.isRequired,
     gameStarted: PropTypes.bool.isRequired
 };
