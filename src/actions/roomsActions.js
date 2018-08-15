@@ -1,5 +1,5 @@
 import ServerRoutes from '../constants/ServerRoutes';
-import { FETCH_ROOMS, START_GAME } from './types';
+import { FETCH_ROOMS } from './types';
 
 export const fetchRooms = () => dispatch => {
     fetch(ServerRoutes.ROOMS)
@@ -10,8 +10,3 @@ export const fetchRooms = () => dispatch => {
         }))
         .catch(error => console.error(error));
 };
-
-export const startGame = () => ({
-    type: START_GAME,
-    payload: true
-});

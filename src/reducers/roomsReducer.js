@@ -1,6 +1,6 @@
-import { FETCH_ROOMS, START_GAME } from '../actions/types';
+import { FETCH_ROOMS } from '../actions/types';
 
-const initialState = { rooms: [], gameStarted: false };
+const initialState = { rooms: [] };
 
 const roomsReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -8,11 +8,6 @@ const roomsReducer = (state = initialState, action) => {
             return {
                 ...state,
                 rooms: action.payload
-            };
-        case START_GAME:
-            return {
-                ...state,
-                gameStarted: action.payload
             };
         default:
             return state;

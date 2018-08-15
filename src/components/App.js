@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Rooms from '../containers/Rooms';
-import Game from './Game';
+import Game from '../containers/Game';
 import styles from '../stylesheets/main.scss';
 
 class App extends Component {

@@ -1,0 +1,30 @@
+.timer {
+  height: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: column;
+  background: #222;
+  margin-bottom: 10px;
+  padding: 15px;
+  .flip-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .flip-item {
+      height: 80px;
+      width: 60px;
+      margin: 5px;
+      background-color: #444;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 5px;
+      box-shadow: 0 0 10px 0;
+      .digit {
+        font-size: 68px;
+        font-weight: bold;
+      }
+    }
+  }
+}

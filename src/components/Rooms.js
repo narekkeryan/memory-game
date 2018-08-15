@@ -9,7 +9,7 @@ class Rooms extends Component {
         this.state = { gameType: false};
 
         this.toggleGameType = this.toggleGameType.bind(this);
-        this.join = this.join.bind(this);
+        this.startGame = this.startGame.bind(this);
     }
 
     componentWillMount() {
@@ -20,8 +20,10 @@ class Rooms extends Component {
         this.setState({ gameType: !this.state.gameType })
     }
 
-    join() {
-        this.props.onClick();
+    startGame(room) {
+        if (!this.state.gameType || room.members != room.occupied) {
+            this.props.startGame(room);
+        }
     }
 
     render() {
@@ -45,7 +47,7 @@ class Rooms extends Component {
                                 <tr key={key} className="room">
                                     <td className="name">{room.name}</td>
                                     <td className={'difficulty ' + Difficulties[room.difficulty]}>{Difficulties[room.difficulty]}</td>
-                                    <td className="options" onClick={this.join}><i className="fas fa-sign-in-alt"></i></td>
+                                    <td className="options" onClick={() => this.startGame(room)}><i className="fas fa-sign-in-alt"></i></td>
                                 </tr>
                             )) }
                         </tbody>
@@ -69,7 +71,7 @@ class Rooms extends Component {
                                         )) }
                                     </td>
                                     <td className={'difficulty ' + Difficulties[room.difficulty]}>{Difficulties[room.difficulty]}</td>
-                                    <td className="options" onClick={room.members - room.occupied ? this.join : null}>
+                                    <td className="options" onClick={room.members - room.occupied ? this.startGame : null}>
                                         <i className={room.members - room.occupied ? "fas fa-sign-in-alt" : "far fa-times-circle"}></i>
                                     </td>
                                 </tr>
@@ -85,8 +87,8 @@ class Rooms extends Component {
 Rooms.propTypes = {
     fetchRooms: PropTypes.func.isRequired,
     rooms: PropTypes.array.isRequired,
-    onClick: PropTypes.func.isRequired,
-    gameStarted: PropTypes.bool.isRequired
+    startGame: PropTypes.func.isRequired,
+    endGame: PropTypes.func.isRequired
 };
 
 export default Rooms;
