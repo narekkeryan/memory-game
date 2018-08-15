@@ -3,13 +3,12 @@
 const express = require('express');
 const app = express();
 
-const cors = require('cors');
-const v1Routes = require('./routes/v1')
+const path = require('path');
+const v1Routes = require('./routes/v1');
 
-app.use(cors({
-    origin: 'http://localhost:8080',
-    optionsSuccessStatus: 200
-}));
+app.use(express.static(path.join(__dirname, 'dist')));
+app.get('/', (req, res) => { res.sendFile(path.join(__dirname, 'dist/index.html')) });
 app.use('/v1', v1Routes);
 
-app.listen(5000, console.log('Listening to 5000!'));
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, console.log(`Listening to ${PORT}!`));
