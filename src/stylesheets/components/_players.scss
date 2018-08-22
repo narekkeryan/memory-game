@@ -1,0 +1,17 @@
+.players {
+  display: flex;
+  .player {
+    flex: 1;
+    background: #222;
+    color: #fff;
+    border: 1px solid;
+    &:not(.active) {
+      opacity: .5;
+    }
+    h4 {
+      font-family: 'Hanalei Fill';
+      text-align: center;
+      padding-top: 15px;
+    }
+  }
+}

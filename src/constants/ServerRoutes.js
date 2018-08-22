@@ -6,4 +6,6 @@ let SERVER_ROUTES = {
 
 Object.keys(SERVER_ROUTES).forEach(key => SERVER_ROUTES[key] = PROXY_URL + SERVER_ROUTES[key]);
 
+export { PROXY_URL };
+
 export default SERVER_ROUTES;

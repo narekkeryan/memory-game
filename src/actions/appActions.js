@@ -1,8 +1,11 @@
 import { START_GAME, END_GAME } from './types';
 
-export const startGame = (room) => ({
+export const startGame = (room, isMultiPlayer = false) => ({
     type: START_GAME,
-    payload: room
+    payload: {
+        room,
+        isMultiPlayer
+    }
 });
 
 export const endGame = () => ({
