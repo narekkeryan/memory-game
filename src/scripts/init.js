@@ -11,6 +11,7 @@ export const init = (difficulty) => {
     switch (difficulty) {
         case 0:
             pics = images.slice(0, 6);
+            seconds = 20;
             break;
         case 1:
             pics = images.slice(0, 12);
