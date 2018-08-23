@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Modal, ModalHeader, ModalBody } from 'reactstrap';
+import Modal from '../components/Modal';
 import Difficulties from '../constants/Difficulties';
 import { init } from '../scripts/init';
 import {
@@ -17,12 +17,13 @@ class MultiPlayer extends Component {
             flippedIndexes: [],
             flippedKeys: [],
             items: [],
-            won: false,
+            gameEnded: false,
             members: [],
             memberId: '',
             started: false,
             activeMemberId: '',
-            points: {}
+            points: {},
+            winner: ''
         };
 
         this.setStateAsync = this.setStateAsync.bind(this);
@@ -50,7 +51,11 @@ class MultiPlayer extends Component {
                             let updatedPoints = this.state.points[this.state.activeMemberId] + 2;
                             this.setState({ points: { ...this.state.points, [this.state.activeMemberId]: updatedPoints } });
                             if (this.state.flippedIndexes.length === this.state.items.length) {
-                                this.setState({ won: true });
+                                const points = this.state.points;
+                                const winner = Object.keys(this.state.points).reduce((a, b) => {
+                                    return points[a] > points[b] ? a : (points[a] < points[b] ? b : '');
+                                });
+                                this.setState({ gameEnded: true, winner: winner });
                                 setTimeout(this.props.endGame, 5000);
                             }
                         } else {
@@ -65,6 +70,9 @@ class MultiPlayer extends Component {
                                 nextActive = 0;
                             }
                             this.setState({ activeMemberId: members[nextActive] })
+                            console.log(members);
+                            console.log(nextActive);
+                            console.log(this.state.activeMemberId);
                         }
                         this.setState({ flippedKeys: [] });
                     }, 1000);
@@ -152,14 +160,7 @@ class MultiPlayer extends Component {
                         );
                     }) }
                 </div>
-                <Modal isOpen={this.props.timeEnded} centered>
-                    <ModalHeader>Time is up</ModalHeader>
-                    <ModalBody>Your time is over. You will be redirected soon.</ModalBody>
-                </Modal>
-                <Modal isOpen={this.state.won} centered>
-                    <ModalHeader>You Won!</ModalHeader>
-                    <ModalBody>You won this round. You will be redirected soon.</ModalBody>
-                </Modal>
+                <Modal isOpen={this.state.gameEnded} winner={this.state.winner} memberId={this.state.memberId} />
             </div>
         );
     }
