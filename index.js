@@ -27,6 +27,12 @@ io.on('connection', socket => {
         }
         io.emit('GET_MEMBERS', members);
     });
+    socket.on('SET_ITEMS', data => {
+        io.emit('GET_ITEMS', data);
+    });
+    socket.on('SET_FLIPPED', data => {
+        io.emit('GET_FLIPPED', data);
+    });
 });
 
 app.use(cors({

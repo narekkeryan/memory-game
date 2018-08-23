@@ -3,15 +3,10 @@ import PropTypes from 'prop-types';
 import { Modal, ModalHeader, ModalBody } from 'reactstrap';
 import Difficulties from '../constants/Difficulties';
 import Timer from '../containers/Timer';
-import { shuffle } from '../scripts/shuffle';
+import { init } from '../scripts/init';
 import backFace from '../images/grooming-1801287_640.png';
 
-const pngs = require.context('../images/uploads', false, /\.png$/);
-
-const keys = pngs.keys();
-const pngsArray = keys.map(key => pngs(key));
-
-class Game extends Component {
+class SinglePlayer extends Component {
     constructor(props) {
         super(props);
 
@@ -21,39 +16,23 @@ class Game extends Component {
             items: [],
             seconds: 20,
             delay: 5,
-            won: false
+            won: false,
+            loading: true
         };
 
         this.setStateAsync = this.setStateAsync.bind(this);
     }
 
-    async componentWillMount() {
-        let pics;
-        switch (this.props.gameRoom.difficulty) {
-            case 0:
-                pics = pngsArray.slice(0, 6);
-                break;
-            case 1:
-                pics = pngsArray.slice(0, 12);
-                this.setState({ seconds: 30 });
-                break;
-            case 2:
-                pics = pngsArray.slice(0, 18);
-                this.setState({ seconds: 40 });
-                break;
-            case 3:
-                pics = pngsArray.slice(0, 25);
-                this.setState({ seconds: 45 });
-                break;
-            default:
-                console.error('Unknown difficulty level.');
-        }
-        await this.setState({ items: shuffle([...pics, ...pics]) });
+    async componentDidMount() {
+        /* get items and seconds */
+        const { items, seconds } = init(this.props.gameRoom.difficulty);
+        await this.setStateAsync({ items , seconds, loading: false  });
+
+        /* keep images open for some time to memorize */
         this.state.items.map((source, key) => this.setState({ flippedIndexes: [ ...this.state.flippedIndexes, key ] }));
         setTimeout(() => { this.setState({ flippedIndexes: [] }) }, this.state.delay * 1000);
-    }
 
-    componentDidMount() {
+        /* show modal when time is ended and make game over */
         let timeEnded = setInterval(() => {
             if (this.props.timeEnded) {
                 clearInterval(timeEnded);
@@ -62,6 +41,7 @@ class Game extends Component {
         }, 1000);
     }
 
+    /* make setState work with async/await */
     setStateAsync(state) {
         return new Promise(resolve => {
             this.setState(state, resolve);
@@ -100,41 +80,43 @@ class Game extends Component {
     render() {
         return (
             <div className="game-room">
-                <h1>{this.props.gameRoom.name}</h1>
-                <p dangerouslySetInnerHTML={{__html: this.props.gameRoom.info}} />
-                <Timer seconds={this.state.seconds} delay={this.state.delay} stop={this.state.won} />
-                <div className={"arena " + Difficulties[this.props.gameRoom.difficulty]}>
-                    { this.state.items.map((source, i) => {
-                        return (
-                            <div key={i} className={~this.state.flippedIndexes.indexOf(i) ? 'item' : 'item flipped'} onClick={() => this.flipItem(i, source)}>
-                                <div className="front face">
-                                    <img src={source} alt=""/>
-                                </div>
-                                <div className="back face">
-                                    <img src={backFace} alt=""/>
-                                </div>
-                            </div>
-                        );
-                    }) }
-                </div>
-                <Modal isOpen={this.props.timeEnded} centered>
-                    <ModalHeader>Time is up</ModalHeader>
-                    <ModalBody>Your time is over. You will be redirected soon.</ModalBody>
-                </Modal>
-                <Modal isOpen={this.state.won} centered>
-                    <ModalHeader>You Won!</ModalHeader>
-                    <ModalBody>You won this round. You will be redirected soon.</ModalBody>
-                </Modal>
+                { this.state.loading ? <div>Loading...</div> : (<div>
+                        <h1>{this.props.gameRoom.name}</h1>
+                        <p dangerouslySetInnerHTML={{__html: this.props.gameRoom.info}} />
+                        <Timer seconds={this.state.seconds} delay={this.state.delay} stop={this.state.won} />
+                        <div className={"arena " + Difficulties[this.props.gameRoom.difficulty]}>
+                            { this.state.items.map((source, i) => {
+                                return (
+                                    <div key={i} className={~this.state.flippedIndexes.indexOf(i) ? 'item' : 'item flipped'} onClick={() => this.flipItem(i, source)}>
+                                        <div className="front face">
+                                            <img src={source} alt=""/>
+                                        </div>
+                                        <div className="back face">
+                                            <img src={backFace} alt=""/>
+                                        </div>
+                                    </div>
+                                );
+                            }) }
+                        </div>
+                        <Modal isOpen={this.props.timeEnded} centered>
+                            <ModalHeader>Time is up</ModalHeader>
+                            <ModalBody>Your time is over. You will be redirected soon.</ModalBody>
+                        </Modal>
+                        <Modal isOpen={this.state.won} centered>
+                            <ModalHeader>You Won!</ModalHeader>
+                            <ModalBody>You won this round. You will be redirected soon.</ModalBody>
+                        </Modal>
+                    </div>) }
             </div>
         );
     }
 }
 
-Game.propTypes = {
+SinglePlayer.propTypes = {
     gameRoom: PropTypes.object.isRequired,
     timeEnded: PropTypes.bool.isRequired,
     endGame: PropTypes.func.isRequired,
     increaseTime: PropTypes.func.isRequired
 };
 
-export default Game;
+export default SinglePlayer;

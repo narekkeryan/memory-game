@@ -2,14 +2,12 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Modal, ModalHeader, ModalBody } from 'reactstrap';
 import Difficulties from '../constants/Difficulties';
-import { shuffle } from '../scripts/shuffle';
+import { init } from '../scripts/init';
+import {
+    addMember, getMembers, removeMember,
+    setItems, getItems, setFlipped, getFlipped
+} from '../socket';
 import backFace from '../images/grooming-1801287_640.png';
-import { addMember, getMembers, removeMember } from '../socket';
-
-const pngs = require.context('../images/uploads', false, /\.png$/);
-
-const keys = pngs.keys();
-const pngsArray = keys.map(key => pngs(key));
 
 class MultiPlayer extends Component {
     constructor(props) {
@@ -21,46 +19,83 @@ class MultiPlayer extends Component {
             items: [],
             won: false,
             members: [],
-            memberId: ''
+            memberId: '',
+            started: false,
+            activeMemberId: '',
+            points: {}
         };
 
         this.setStateAsync = this.setStateAsync.bind(this);
-
-        console.log(this.state);
-    }
-
-    async componentWillMount() {
-        let pics;
-        switch (this.props.gameRoom.difficulty) {
-            case 0:
-                pics = pngsArray.slice(0, 6);
-                break;
-            case 1:
-                pics = pngsArray.slice(0, 12);
-                this.setState({ seconds: 30 });
-                break;
-            case 2:
-                pics = pngsArray.slice(0, 18);
-                this.setState({ seconds: 40 });
-                break;
-            case 3:
-                pics = pngsArray.slice(0, 25);
-                this.setState({ seconds: 45 });
-                break;
-            default:
-                console.error('Unknown difficulty level.');
-        }
-        await this.setStateAsync({ items: shuffle([...pics, ...pics]) });
     }
 
     componentDidMount() {
+        const { items } = init(this.props.gameRoom.difficulty);
+        setItems(this.props.gameRoom.id, items);
+        getItems(data => {
+            if (data.room === this.props.gameRoom.id) {
+                this.setState({ items: data.items });
+            }
+        });
+
+        getFlipped(async data => {
+            if (data.room = this.props.gameRoom.id) {
+                await this.setStateAsync({
+                    flippedIndexes: data.flippedIndexes,
+                    flippedKeys: data.flippedKeys
+                });
+
+                if (this.state.flippedKeys.length === 2) {
+                    setTimeout(async () => {
+                        if (this.state.flippedKeys[0] === this.state.flippedKeys[1]) {
+                            let updatedPoints = this.state.points[this.state.activeMemberId] + 2;
+                            this.setState({ points: { ...this.state.points, [this.state.activeMemberId]: updatedPoints } });
+                            if (this.state.flippedIndexes.length === this.state.items.length) {
+                                this.setState({ won: true });
+                                setTimeout(this.props.endGame, 5000);
+                            }
+                        } else {
+                            let flippedIndexes = this.state.flippedIndexes;
+                            flippedIndexes.splice(-2, 2);
+                            await this.setStateAsync({ flippedIndexes: flippedIndexes });
+
+                            /* Change Active Member */
+                            let members = this.state.members[this.props.gameRoom.id];
+                            let nextActive = members.indexOf(this.state.activeMemberId) + 1;
+                            if (nextActive >= members.length) {
+                                nextActive = 0;
+                            }
+                            this.setState({ activeMemberId: members[nextActive] })
+                        }
+                        this.setState({ flippedKeys: [] });
+                    }, 1000);
+                }
+            }
+        });
+
         addMember(this.props.gameRoom.id);
-        getMembers(async data => {
-            await this.setState({ members: data });
+        getMembers(data => {
+            /* get all members */
+            this.setState({ members: data });
+
+            /* set initial points */
+            for (let memberId of this.state.members[this.props.gameRoom.id]) {
+                this.setState({ points: {...this.state.points, [memberId]: 0 } })
+            }
+
+            /* set current member */
             if (!this.state.memberId) {
                 this.setState({ memberId: data[this.props.gameRoom.id][data[this.props.gameRoom.id].length-1] });
             }
+
+            /* start if all members arrived */
+            if (data[this.props.gameRoom.id].length === this.props.gameRoom.members) {
+                this.setState({ started: true });
+            }
+
+            /* set active member id */
+            this.setState({ activeMemberId: data[this.props.gameRoom.id][0] });
         });
+
         window.addEventListener('beforeunload', () => { removeMember(this.props.gameRoom.id) });
     }
 
@@ -75,32 +110,18 @@ class MultiPlayer extends Component {
         });
     }
 
-    async flipItem(index, key) {
+    flipItem(index, key) {
         if (this.state.flippedKeys.length < 2
             && index !== this.state.flippedIndexes[this.state.flippedIndexes.length-1]
-            && this.state.flippedIndexes.length !== this.state.items.length) {
+            && this.state.flippedIndexes.length !== this.state.items.length
+            && this.state.started
+            && this.state.memberId === this.state.activeMemberId) {
 
-            await this.setStateAsync({
-                flippedIndexes: [...this.state.flippedIndexes, index],
-                flippedKeys: [...this.state.flippedKeys, key]
-            });
-
-            if (this.state.flippedKeys.length === 2) {
-                setTimeout(async () => {
-                    if (this.state.flippedKeys[0] === this.state.flippedKeys[1]) {
-                        this.props.increaseTime(this.state.delay + 1);
-                        if (this.state.flippedIndexes.length === this.state.items.length) {
-                            this.setState({ won: true });
-                            setTimeout(this.props.endGame, 5000);
-                        }
-                    } else {
-                        let flippedIndexes = this.state.flippedIndexes;
-                        flippedIndexes.splice(-2, 2);
-                        await this.setStateAsync({ flippedIndexes: flippedIndexes });
-                    }
-                    this.setState({ flippedKeys: [] });
-                }, 1000);
-            }
+            setFlipped(
+                this.props.gameRoom.id,
+                [...this.state.flippedIndexes, index],
+                [...this.state.flippedKeys, key]
+            );
         }
     }
 
@@ -113,14 +134,14 @@ class MultiPlayer extends Component {
                     { this.state.members[this.props.gameRoom.id] && this.state.members[this.props.gameRoom.id].map((memberId, key, arr) => (
                         <div key={memberId} className={memberId === this.state.memberId ? "player active" : "player"}>
                             <h4>Player {key + 1}</h4>
-                            <p>points: 0</p>
+                            <p>points: {this.state.points[memberId]}</p>
                         </div>
                     )) }
                 </div>
                 <div className={"arena " + Difficulties[this.props.gameRoom.difficulty]}>
-                    { this.state.items.map((source, i) => {
+                    { this.state.items && this.state.items.map((source, i) => {
                         return (
-                            <div key={i} className={~this.state.flippedIndexes.indexOf(i) ? 'item' : 'item flipped'} onClick={() => this.flipItem(i, source)}>
+                            <div key={i} className={this.state.flippedIndexes && ~this.state.flippedIndexes.indexOf(i) ? 'item' : 'item flipped'} onClick={() => this.flipItem(i, source)}>
                                 <div className="front face">
                                     <img src={source} alt=""/>
                                 </div>

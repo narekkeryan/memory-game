@@ -18,3 +18,19 @@ export const removeMember = room => {
 export const getMembers = cb => {
     socket.on('GET_MEMBERS', data => cb(data));
 };
+
+export const setItems = (room, items) => {
+    socket.emit('SET_ITEMS', { room, items });
+};
+
+export const getItems = cb => {
+    socket.on('GET_ITEMS', items => cb(items));
+};
+
+export const setFlipped = (room, flippedIndexes, flippedKeys) => {
+    socket.emit('SET_FLIPPED', { room, flippedIndexes, flippedKeys });
+};
+
+export const getFlipped = cb => {
+    socket.on('GET_FLIPPED', flipped => cb(flipped));
+};

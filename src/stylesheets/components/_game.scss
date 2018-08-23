@@ -16,10 +16,10 @@
       flex-wrap: wrap;
       margin: 0 auto;
       &.easy {
-        width: 930px;
+        max-width: 930px;
       }
       &.normal {
-        width: 1250px;
+        max-width: 1250px;
       }
       &.difficult {
         .item {
