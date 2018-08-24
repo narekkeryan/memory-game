@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Alert } from 'reactstrap';
 import Modal from '../components/Modal';
 import Difficulties from '../constants/Difficulties';
 import { init } from '../scripts/init';
@@ -138,6 +139,7 @@ class MultiPlayer extends Component {
             <div className="game-room">
                 <h1>{this.props.gameRoom.name}</h1>
                 <p dangerouslySetInnerHTML={{__html: this.props.gameRoom.info}} />
+                { !this.state.started && <Alert color="warning">Waiting for players...</Alert>}
                 <div className="players">
                     { this.state.members[this.props.gameRoom.id] && this.state.members[this.props.gameRoom.id].map((memberId, key, arr) => (
                         <div key={memberId} className={memberId === this.state.memberId ? "player active" : "player"}>
