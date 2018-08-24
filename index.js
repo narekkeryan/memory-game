@@ -22,7 +22,7 @@ io.on('connection', socket => {
         io.emit('GET_MEMBERS', members);
     });
     socket.on('REMOVE_MEMBER', data => {
-        if (members[data].indexOf(socket.id)) {
+        if (~members[data].indexOf(socket.id)) {
             members[data].splice(members[data].indexOf(socket.id), 1);
         }
         io.emit('GET_MEMBERS', members);
