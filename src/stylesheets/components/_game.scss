@@ -74,5 +74,19 @@
         }
       }
     }
+    .sign-out {
+      position: fixed;
+      right: 15px;
+      top: 15px;
+      font-size: 24px;
+      background: #fff;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 5px;
+      cursor: pointer;
+    }
   }
 }

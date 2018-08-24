@@ -160,6 +160,9 @@ class MultiPlayer extends Component {
                         );
                     }) }
                 </div>
+                <div className="sign-out" onClick={this.props.endGame}>
+                    <i className="fas fa-sign-out-alt"></i>
+                </div>
                 <Modal isOpen={this.state.gameEnded} winner={this.state.winner} memberId={this.state.memberId} />
             </div>
         );

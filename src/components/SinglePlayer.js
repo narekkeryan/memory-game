@@ -98,6 +98,9 @@ class SinglePlayer extends Component {
                                 );
                             }) }
                         </div>
+                        <div className="sign-out" onClick={this.props.endGame}>
+                            <i className="fas fa-sign-out-alt"></i>
+                        </div>
                         <Modal isOpen={this.props.timeEnded} centered>
                             <ModalHeader>Time is up</ModalHeader>
                             <ModalBody>Your time is over. You will be redirected soon.</ModalBody>
