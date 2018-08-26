@@ -9,7 +9,7 @@ const v1Routes = require('./routes/v1');
 const app = express();
 const server = http.Server(app);
 const io = socket(server);
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
 let members = new Array(12).fill([]);
 let roomStatuses = new Array(12).fill(true);
