@@ -47,8 +47,8 @@ class Rooms extends Component {
         return (
             <div className="rooms-area">
                 <div className="game-types">
-                    <div className={!this.state.gameType ? 'game-type active': 'game-type'} onClick={this.toggleGameType}>Singular</div>
-                    <div className={this.state.gameType ? 'game-type active': 'game-type'} onClick={this.toggleGameType}>Multiplayer</div>
+                    <div className={!this.state.gameType ? 'game-type active': 'game-type'} onClick={this.state.gameType ? this.toggleGameType : null}>Singular</div>
+                    <div className={this.state.gameType ? 'game-type active': 'game-type'} onClick={!this.state.gameType ? this.toggleGameType : null}>Multiplayer</div>
                 </div>
                 <div className="rooms">
                     <table className={!this.state.gameType ? 'table singular-rooms active': 'table singular-rooms'}>
