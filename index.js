@@ -1,12 +1,9 @@
 'use strict';
 
 const express = require('express');
-const app = express();
-
-const path = require('path');
-const v1Routes = require('./routes/v1');
 const http = require('http');
 const socket = require('socket.io');
+const path = require('path');
 const v1Routes = require('./routes/v1');
 
 const app = express();
