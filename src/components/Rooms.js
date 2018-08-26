@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Difficulties from '../constants/Difficulties';
-import { requestMembers, getMembers } from '../socket';
+import { requestMembers, getMembers, requestRoomStatuses, getRoomsStatuses } from '../socket';
 
 class Rooms extends Component {
     constructor(props) {
         super(props);
 
-        this.state = { gameType: false, members: new Array(12).fill(0) };
+        this.state = {
+            gameType: false,
+            members: new Array(12).fill(0),
+            roomStatuses: new Array(12).fill(true)
+        };
 
         this.toggleGameType = this.toggleGameType.bind(this);
         this.startGame = this.startGame.bind(this);
@@ -20,6 +24,11 @@ class Rooms extends Component {
     componentDidMount() {
         requestMembers();
         getMembers(data => this.setState({ members: data }));
+
+        requestRoomStatuses();
+        getRoomsStatuses(roomStatuses => {
+            this.setState({ roomStatuses: roomStatuses });
+        });
     }
 
     toggleGameType() {
@@ -27,7 +36,9 @@ class Rooms extends Component {
     }
 
     startGame(room) {
-        if (!this.state.gameType || room.members != this.state.members[room.id].length) {
+        if (!this.state.gameType || (
+                room.members != this.state.members[room.id].length && this.state.roomStatuses[room.id]
+            )) {
             this.props.startGame(room, this.state.gameType);
         }
     }
@@ -78,7 +89,7 @@ class Rooms extends Component {
                                     </td>
                                     <td className={'difficulty ' + Difficulties[room.difficulty]}>{Difficulties[room.difficulty]}</td>
                                     <td className="options" onClick={() => this.startGame(room)}>
-                                        <i className={room.members - this.state.members[room.id].length ? "fas fa-sign-in-alt" : "far fa-times-circle"}></i>
+                                        <i className={this.state.roomStatuses[room.id] ? "fas fa-sign-in-alt" : "far fa-times-circle"}></i>
                                     </td>
                                 </tr>
                             )) }

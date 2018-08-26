@@ -6,7 +6,8 @@ import Difficulties from '../constants/Difficulties';
 import { init } from '../scripts/init';
 import {
     addMember, getMembers, removeMember,
-    setItems, getItems, setFlipped, getFlipped
+    setItems, getItems, setFlipped, getFlipped,
+    isRemoved, setRoomStatuses
 } from '../socket';
 import backFace from '../images/grooming-1801287_640.png';
 
@@ -57,7 +58,10 @@ class MultiPlayer extends Component {
                                     return points[a] > points[b] ? a : (points[a] < points[b] ? b : '');
                                 });
                                 this.setState({ gameEnded: true, winner: winner });
-                                setTimeout(this.props.endGame, 5000);
+                                setTimeout(() => {
+                                    setRoomStatuses(this.props.gameRoom.id, true);
+                                    this.props.endGame();
+                                }, 5000);
                             }
                         } else {
                             let flippedIndexes = this.state.flippedIndexes;
@@ -70,10 +74,7 @@ class MultiPlayer extends Component {
                             if (nextActive >= members.length) {
                                 nextActive = 0;
                             }
-                            this.setState({ activeMemberId: members[nextActive] })
-                            console.log(members);
-                            console.log(nextActive);
-                            console.log(this.state.activeMemberId);
+                            this.setState({ activeMemberId: members[nextActive] });
                         }
                         this.setState({ flippedKeys: [] });
                     }, 1000);
@@ -83,12 +84,26 @@ class MultiPlayer extends Component {
 
         addMember(this.props.gameRoom.id);
         getMembers(data => {
+            /* set active member id */
+            if (this.state.activeMemberId) {
+                let members = this.state.members[this.props.gameRoom.id];
+                let nextActive = members.indexOf(this.state.activeMemberId);
+                if (nextActive >= data[this.props.gameRoom.id].length) {
+                    nextActive = 0;
+                }
+                this.setState({ activeMemberId: data[this.props.gameRoom.id][nextActive] });
+            } else {
+                this.setState({ activeMemberId: data[this.props.gameRoom.id][0] });
+            }
+
             /* get all members */
             this.setState({ members: data });
 
             /* set initial points */
             for (let memberId of this.state.members[this.props.gameRoom.id]) {
-                this.setState({ points: {...this.state.points, [memberId]: 0 } })
+                if (!this.state.points[memberId]) {
+                    this.setState({ points: {...this.state.points, [memberId]: 0 } })
+                }
             }
 
             /* set current member */
@@ -99,10 +114,18 @@ class MultiPlayer extends Component {
             /* start if all members arrived */
             if (data[this.props.gameRoom.id].length === this.props.gameRoom.members) {
                 this.setState({ started: true });
+                setRoomStatuses(this.props.gameRoom.id, false);
             }
+        });
 
-            /* set active member id */
-            this.setState({ activeMemberId: data[this.props.gameRoom.id][0] });
+        isRemoved(removed => {
+            if (removed && this.state.members[this.props.gameRoom.id].length === 1 && this.state.started) {
+                this.setState({ gameEnded: true, winner: this.state.members[this.props.gameRoom.id][0] });
+                setTimeout(() => {
+                    setRoomStatuses(this.props.gameRoom.id, true);
+                    this.props.endGame();
+                }, 5000);
+            }
         });
 
         window.addEventListener('beforeunload', () => { removeMember(this.props.gameRoom.id) });
