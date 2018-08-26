@@ -5,6 +5,7 @@ import Game from '../components/Game';
 
 const mapStateToProps = state => ({
     gameRoom: state.app.gameRoom,
+    isMultiPlayer: state.app.isMultiPlayer,
     timeEnded: state.timer.timeEnded
 });
 

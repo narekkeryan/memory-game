@@ -1,6 +1,6 @@
 import { START_GAME, END_GAME } from '../actions/types';
 
-const initialState = { gameStarted: false, gameRoom: {} };
+const initialState = { gameStarted: false, gameRoom: {}, isMultiPlayer: false };
 
 const roomsReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -8,7 +8,8 @@ const roomsReducer = (state = initialState, action) => {
             return {
                 ...state,
                 gameStarted: true,
-                gameRoom: action.payload
+                gameRoom: action.payload.room,
+                isMultiPlayer: action.payload.isMultiPlayer
             };
         case END_GAME:
             return {

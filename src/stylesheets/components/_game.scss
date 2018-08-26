@@ -1,76 +1,95 @@
-.game-room {
+.app-game {
   width: 100%;
-  h1 {
-    text-align: center;
-    font-family: 'Hanalei Fill';
-  }
-  p {
-    text-align: center;
-    font-family: 'MedievalSharp';
-    padding: 0 15px;
-  }
-  .arena {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin: 0 auto;
-    &.easy {
-      width: 930px;
+  .game-room {
+    h1 {
+      text-align: center;
+      font-family: 'Hanalei Fill';
     }
-    &.normal {
-      width: 1250px;
+    p {
+      text-align: center;
+      font-family: 'MedievalSharp';
+      padding: 0 15px;
     }
-    &.difficult {
-      .item {
-        width: 105px;
-        height: 105px;
-        .face {
-          img {
-            max-width: 84px;
-            max-height: 84px;
-          }
-        }
-      }
+    .alert {
+      margin: 0 15px 15px;
     }
-    &.legendary {
-      .item {
-        width: 95px;
-        height: 95px;
-        .face {
-          img {
-            max-width: 76px;
-            max-height: 76px;
-          }
-        }
-      }
-    }
-    .item {
-      position: relative;
+    .arena {
       display: flex;
-      align-items: center;
       justify-content: center;
-      width: 125px;
-      height: 125px;
-      margin: 15px;
-      border-radius: 5px;
-      transform-style: preserve-3d;
-      transition: all .5s linear;
-      box-shadow: 0 0 5px 1px #000;
-      background: #fff;
-      &.flipped {
-        transform: rotateY(180deg);
+      flex-wrap: wrap;
+      margin: 0 auto;
+      &.easy {
+        max-width: 930px;
       }
-      .face {
-        position: absolute;
-        backface-visibility: hidden;
-        &.back {
+      &.normal {
+        max-width: 1250px;
+      }
+      &.difficult {
+        .item {
+          width: 105px;
+          height: 105px;
+          .face {
+            img {
+              max-width: 84px;
+              max-height: 84px;
+            }
+          }
+        }
+      }
+      &.legendary {
+        .item {
+          width: 95px;
+          height: 95px;
+          .face {
+            img {
+              max-width: 76px;
+              max-height: 76px;
+            }
+          }
+        }
+      }
+      .item {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 125px;
+        height: 125px;
+        margin: 15px;
+        border-radius: 5px;
+        transform-style: preserve-3d;
+        transition: all .5s linear;
+        box-shadow: 0 0 5px 1px #000;
+        background: #fff;
+        &.flipped {
           transform: rotateY(180deg);
         }
-        img {
-          max-width: 100px;
-          max-height: 100px;
+        .face {
+          position: absolute;
+          backface-visibility: hidden;
+          &.back {
+            transform: rotateY(180deg);
+          }
+          img {
+            max-width: 100px;
+            max-height: 100px;
+          }
         }
       }
+    }
+    .sign-out {
+      position: fixed;
+      right: 15px;
+      top: 15px;
+      font-size: 24px;
+      background: #fff;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 5px;
+      cursor: pointer;
     }
   }
 }

@@ -1,86 +1,86 @@
 [
   {
+    "id": "0",
     "name": "Alderaan",
     "difficulty": 0,
-    "members": 4,
-    "occupied": 0,
+    "members": 2,
     "info": "Forests, mountains; home planet of <a href=\"https://en.wikipedia.org/wiki/Princess_Leia\" title=\"Princess Leia\" target=\"_blank\">Princess Leia</a> and the House of Organa. Destroyed by the first <a href=\"https://en.wikipedia.org/wiki/Death_Star\" title=\"Death Star\" target=\"_blank\">Death Star</a> as punishment for involvement in the <a href=\"https://en.wikipedia.org/wiki/Rebel_Alliance\" title=\"Rebel Alliance\" target=\"_blank\">Rebel Alliance</a> and also as a <a href=\"https://en.wikipedia.org/wiki/Show_of_force\" title=\"Show of force\" target=\"_blank\">demonstration of power</a>."
   },
   {
+    "id": "1",
     "name": "Coruscant",
     "difficulty": 0,
-    "members": 4,
-    "occupied": 1,
+    "members": 2,
     "info": "Cosmopolitan urban world consisting of one <a href=\"https://en.wikipedia.org/wiki/Ecumenopolis\" title=\"Ecumenopolis\" target=\"_blank\">planet-wide city</a>. Governmental center of the <a href=\"https://en.wikipedia.org/wiki/Galactic_Republic\" title=\"Galactic Republic\" target=\"_blank\">Galactic Republic</a> and later the <a href=\"https://en.wikipedia.org/wiki/Galactic_Empire_(Star_Wars)\" title=\"Galactic Empire (Star Wars)\" target=\"_blank\">Galactic Empire</a>."
   },
   {
+    "id": "2",
     "name": "Dagobah",
     "difficulty": 0,
-    "members": 4,
-    "occupied": 2,
+    "members": 2,
     "info": "Swamp planet and <a href=\"https://en.wikipedia.org/wiki/Yoda\" title=\"Yoda\" target=\"_blank\">Yoda</a>'s residence after the fall of the Jedi."
   },
   {
+    "id": "3",
     "name": "Dantooine",
     "difficulty": 0,
-    "members": 4,
-    "occupied": 3,
+    "members": 2,
     "info": "Rural planet and the former site of a Rebel base."
   },
   {
+    "id": "4",
     "name": "Dathomir",
     "difficulty": 0,
-    "members": 4,
-    "occupied": 4,
+    "members": 2,
     "info": "Homeworld of the Force-sensitive Nightsisters, including <a href=\"https://en.wikipedia.org/wiki/Asajj_Ventress\" title=\"Asajj Ventress\" target=\"_blank\">Asajj Ventress</a>. <a href=\"https://en.wikipedia.org/wiki/Darth_Maul\" title=\"Darth Maul\" target=\"_blank\">Darth Maul</a>'s training ground."
   },
   {
+    "id": "5",
     "name": "Florrum",
     "difficulty": 1,
-    "members": 4,
-    "occupied": 0,
+    "members": 3,
     "info": "Sulfurous desert planet. <a href=\"https://en.wikipedia.org/wiki/Hondo_Ohnaka\" title=\"Hondo Ohnaka\" target=\"_blank\">Hondo Ohnaka</a> is the leader of a pirate gang based on the planet."
   },
   {
+    "id": "6",
     "name": "Geonosis",
     "difficulty": 1,
-    "members": 4,
-    "occupied": 0,
+    "members": 3,
     "info": "Rocky desert planet where <a href=\"https://en.wikipedia.org/wiki/Battle_droid\" title=\"Battle droid\" target=\"_blank\">battle droids</a> are manufactured, and the site of the opening battle of the <a href=\"https://en.wikipedia.org/wiki/Clone_Wars_(Star_Wars)\" title=\"Clone Wars (Star Wars)\" target=\"_blank\">Clone Wars</a>. All life on the planet is presumed destroyed by the Empire in <i><a href=\"https://en.wikipedia.org/wiki/Star_Wars_Rebels\" title=\"Star Wars Rebels\" target=\"_blank\">Star Wars Rebels</a></i>. Close to Tatooine."
   },
   {
+    "id": "7",
     "name": "Mandalore",
     "difficulty": 1,
-    "members": 4,
-    "occupied": 0,
+    "members": 3,
     "info": "Formerly habitable planet and the subject of legends due to its history of Mandalorian warriors."
   },
   {
+    "id": "8",
     "name": "Mustafar",
     "difficulty": 2,
     "members": 4,
-    "occupied": 0,
     "info": "Volcanic planet, former stronghold of the Confederacy and the location of a duel between <a href=\"https://en.wikipedia.org/wiki/Darth_Vader\" title=\"Darth Vader\" target=\"_blank\">Darth Vader</a> and <a href=\"https://en.wikipedia.org/wiki/Obi-Wan_Kenobi\" title=\"Obi-Wan Kenobi\" target=\"_blank\">Obi-Wan Kenobi</a>. Later became the site of Vader's sanctuary."
   },
   {
+    "id": "9",
     "name": "Naboo",
     "difficulty": 2,
     "members": 4,
-    "occupied": 0,
     "info": "Home planet of the <a href=\"https://en.wikipedia.org/wiki/Gungan\" title=\"Gungan\" target=\"_blank\">Gungans</a>, including <a href=\"https://en.wikipedia.org/wiki/Jar-Jar_Binks\" title=\"Jar-Jar Binks\" target=\"_blank\">Jar-Jar Binks</a>, and various humans, who comprise a civilization called the Naboo, which include <a href=\"https://en.wikipedia.org/wiki/Padm%C3%A9_Amidala\" title=\"Padmé Amidala\" target=\"_blank\">Padmé Amidala</a> and Emperor <a href=\"https://en.wikipedia.org/wiki/Palpatine\" title=\"Palpatine\" target=\"_blank\">Palpatine</a>."
   },
   {
+    "id": "10",
     "name": "Tatooine",
     "difficulty": 2,
     "members": 4,
-    "occupied": 0,
     "info": "Desert planet and childhood home of <a href=\"https://en.wikipedia.org/wiki/Anakin_Skywalker\" title=\"Anakin Skywalker\" target=\"_blank\">Anakin Skywalker</a> (<a href=\"https://en.wikipedia.org/wiki/Darth_Vader\" title=\"Darth Vader\" target=\"_blank\">Darth Vader</a>) and <a href=\"https://en.wikipedia.org/wiki/Luke_Skywalker\" title=\"Luke Skywalker\" target=\"_blank\">Luke Skywalker</a>. Location of Jabba's palace."
   },
   {
+    "id": "11",
     "name": "Yavin",
     "difficulty": 3,
     "members": 4,
-    "occupied": 0,
     "info": "Gas planet with several moons, including Yavin 4."
   }
 ]

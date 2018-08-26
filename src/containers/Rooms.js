@@ -9,7 +9,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     fetchRooms: () => dispatch(fetchRooms()),
-    startGame: (room) => dispatch(startGame(room)),
+    startGame: (room, isMultiPlayer) => dispatch(startGame(room, isMultiPlayer)),
     endGame: () => dispatch(endGame())
 });
 
